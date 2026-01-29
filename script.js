@@ -23,17 +23,23 @@ envelope.addEventListener("click", () => {
 // Logic to move the NO btn
 
 noBtn.addEventListener("mouseover", () => {
-    const min = 200;
-    const max = 200;
+    // 1. Calculate the available area (Screen size - Button size)
+    // We subtract the button's width/height to ensure it doesn't clip off the edge
+    const maxX = window.innerWidth - noBtn.offsetWidth - 20; // 20px padding
+    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
-    const distance = Math.random() * (max - min) + min;
-    const angle = Math.random() * Math.PI * 2;
+    // 2. Generate a random X and Y within that safe area
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
 
-    const moveX = Math.cos(angle) * distance;
-    const moveY = Math.sin(angle) * distance;
-
-    noBtn.style.transition = "transform 0.3s ease";
-    noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    // 3. Apply the new position
+    // We switch to 'fixed' positioning so coordinates are relative to the screen viewport
+    noBtn.style.position = "fixed"; 
+    noBtn.style.left = `${randomX}px`;
+    noBtn.style.top = `${randomY}px`;
+    
+    // Optional: Add a smooth transition
+    noBtn.style.transition = "left 0.3s ease, top 0.3s ease";
 });
 
 // Logic to make YES btn to grow
